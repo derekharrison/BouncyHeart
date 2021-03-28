@@ -7,6 +7,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
+import androidx.constraintlayout.widget.ConstraintSet;
+
 /**
  * Created by rushd on 7/5/2017.
  */
@@ -27,7 +29,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         loc_x = 100;
         loc_y = 100;
-        action = 2;
+        action = 3;
 
         setFocusable(true);
 
@@ -41,11 +43,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-        this.loc_x = (int) event.getX();
-        this.loc_y = (int) event.getY();
-
         switch (event.getAction()) {
+            case MotionEvent.ACTION_MOVE:
+                this.loc_x = (int) event.getX();
+                this.loc_y = (int) event.getY();
+                this.action = MotionEvent.ACTION_MOVE;
+                break;
             case MotionEvent.ACTION_DOWN:
+                this.loc_x = (int) event.getX();
+                this.loc_y = (int) event.getY();
                 this.action = MotionEvent.ACTION_DOWN;
                 break;
             case MotionEvent.ACTION_UP:

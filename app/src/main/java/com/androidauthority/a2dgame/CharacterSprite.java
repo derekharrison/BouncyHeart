@@ -3,6 +3,7 @@ package com.androidauthority.a2dgame;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
@@ -41,7 +42,7 @@ public class CharacterSprite {
 
         x_o = x;
         y_o = y;
-        if(action == 0) {
+        if(action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
             x = (int) loc_x;
             xVelocity = x - x_o;
         }
@@ -53,7 +54,7 @@ public class CharacterSprite {
 
         }
 
-        if(action == 0) {
+        if(action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
             y = (int) loc_y;
             yVelocity = y - y_o;
         }
