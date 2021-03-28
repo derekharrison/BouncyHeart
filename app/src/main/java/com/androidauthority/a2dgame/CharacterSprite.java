@@ -41,7 +41,7 @@ public class CharacterSprite {
 
         x_o = x;
         y_o = y;
-        if( loc_x != x && action == 0) {
+        if(action == 0) {
             x = (int) loc_x;
             xVelocity = x - x_o;
         }
@@ -53,7 +53,7 @@ public class CharacterSprite {
 
         }
 
-        if( loc_y != y && action == 0) {
+        if(action == 0) {
             y = (int) loc_y;
             yVelocity = y - y_o;
         }
