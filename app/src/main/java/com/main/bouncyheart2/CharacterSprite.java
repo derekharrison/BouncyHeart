@@ -1,8 +1,13 @@
-package com.androidauthority.a2dgame;
+package com.main.bouncyheart2;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.view.MotionEvent;
 
 import static java.lang.Math.abs;
@@ -23,13 +28,35 @@ public class CharacterSprite {
     private int maxSpeed = 500;
     private int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
     private int screenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+    private SoundPool soundPool;
+    private int sound;
+    private Context context;
 
-    public CharacterSprite (Bitmap bmp) {
+    public CharacterSprite (Bitmap bmp, Context context_main) {
         image = bmp;
         x = 100;
         y = 100;
         x_o = 100;
         y_o = 100;
+
+        context = context_main;
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+
+            soundPool = new SoundPool.Builder()
+                    .setMaxStreams(1)
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+        } else {
+            soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+
+        }
+
+        sound = soundPool.load(context, R.raw.tutti, 1);
     }
 
 
@@ -50,6 +77,7 @@ public class CharacterSprite {
             x += xVelocity;
             if ((x > screenWidth - image.getWidth()) || (x < 0)) {
                 xVelocity = xVelocity * -1;
+                soundPool.play(sound, 1, 1, 0, 0, 1);
             }
 
         }
@@ -62,6 +90,7 @@ public class CharacterSprite {
             y += yVelocity;
             if ((y > screenHeight - image.getHeight()) || (y < 0)) {
                 yVelocity = yVelocity * -1;
+                soundPool.play(sound, 1, 1, 0, 0, 1);
             }
         }
 
