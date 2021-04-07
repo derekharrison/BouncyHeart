@@ -10,6 +10,8 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.view.MotionEvent;
 
+import java.util.Random;
+
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
@@ -29,7 +31,7 @@ public class CharacterSprite {
     private int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
     private int screenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
     private SoundPool soundPool;
-    private int sound;
+    private int sound1, sound2, sound3;
     private Context context;
 
     public CharacterSprite (Bitmap bmp, Context context_main) {
@@ -48,15 +50,18 @@ public class CharacterSprite {
                     .build();
 
             soundPool = new SoundPool.Builder()
-                    .setMaxStreams(1)
+                    .setMaxStreams(3)
                     .setAudioAttributes(audioAttributes)
                     .build();
         } else {
-            soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+            soundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
 
         }
 
-        sound = soundPool.load(context, R.raw.tutti, 1);
+        sound1 = soundPool.load(context, R.raw.tutti_1, 1);
+        sound2 = soundPool.load(context, R.raw.tutti_2, 1);
+        sound3 = soundPool.load(context, R.raw.tutti_3, 1);
+
     }
 
 
@@ -77,7 +82,23 @@ public class CharacterSprite {
             x += xVelocity;
             if ((x > screenWidth - image.getWidth()) || (x < 0)) {
                 xVelocity = xVelocity * -1;
-                soundPool.play(sound, 1, 1, 0, 0, 1);
+                // nextInt is normally exclusive of the top value,
+                // so add 1 to make it inclusive
+                int min = 0;
+                int max = 2;
+                Random rand = new Random();
+                int randomNum = rand.nextInt((max - min) + 1) + min;
+                switch (randomNum) {
+                    case 0:
+                        soundPool.play(sound1, 1, 1, 0, 0, 1);
+                        break;
+                    case 1:
+                        soundPool.play(sound2, 1, 1, 0, 0, 1);
+                        break;
+                    case 2:
+                        soundPool.play(sound3, 1, 1, 0, 0, 1);
+                        break;
+                }
             }
 
         }
@@ -90,7 +111,23 @@ public class CharacterSprite {
             y += yVelocity;
             if ((y > screenHeight - image.getHeight()) || (y < 0)) {
                 yVelocity = yVelocity * -1;
-                soundPool.play(sound, 1, 1, 0, 0, 1);
+                // nextInt is normally exclusive of the top value,
+                // so add 1 to make it inclusive
+                int min = 0;
+                int max = 2;
+                Random rand = new Random();
+                int randomNum = rand.nextInt((max - min) + 1) + min;
+                switch (randomNum) {
+                    case 0:
+                        soundPool.play(sound1, 1, 1, 0, 0, 1);
+                        break;
+                    case 1:
+                        soundPool.play(sound2, 1, 1, 0, 0, 1);
+                        break;
+                    case 2:
+                        soundPool.play(sound3, 1, 1, 0, 0, 1);
+                        break;
+                }
             }
         }
 
