@@ -124,6 +124,12 @@ public class CharacterSprite {
                 xVelocity = xVelocity * -1;
                 play_sound();
             }
+            if(x > screenWidth - image.getWidth()) {
+                x = screenWidth - image.getWidth();
+            }
+            if(x < 0) {
+                x = 0;
+            }
 
         }
 
@@ -136,6 +142,12 @@ public class CharacterSprite {
             if ((y > screenHeight - image.getHeight()) || (y < 0)) {
                 yVelocity = yVelocity * -1;
                 play_sound();
+            }
+            if(y > screenHeight - image.getHeight()) {
+                y = screenHeight - image.getHeight();
+            }
+            if(y < 0) {
+                y = 0;
             }
         }
 
